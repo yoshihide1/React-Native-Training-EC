@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import {
   Container,
   Left,
@@ -10,11 +10,11 @@ import {
   CardItem,
   Card,
 } from 'native-base';
-import {Description} from '../interface/Interface';
+import {NavigationRoute} from '../interface/Interface';
 import NavBarBottom from '../components/nav/NavBarBottom';
 import UrlGenerator from '../api/UrlApi';
 
-const ProductDetailScreen = ({route}: Description) => {
+const ProductDetailScreen = ({route}: NavigationRoute) => {
   const {name, price, description, imagePath} = route.params;
   return (
     <Container>
@@ -31,7 +31,7 @@ const ProductDetailScreen = ({route}: Description) => {
           <CardItem>
             <Body>
               <Image
-                style={{height: 300, width: '100%', flex: 1}}
+                style={styles.img}
                 resizeMode={'contain'}
                 source={{
                   uri: UrlGenerator.image(imagePath),
@@ -54,5 +54,13 @@ const ProductDetailScreen = ({route}: Description) => {
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  img: {
+    height: 300,
+    width: '100%',
+    flex: 1,
+  },
+});
 
 export default ProductDetailScreen;

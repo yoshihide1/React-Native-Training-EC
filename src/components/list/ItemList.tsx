@@ -7,7 +7,7 @@ import Storage from '../../Storage';
 import UrlApi from '../../api/UrlApi';
 import {Product} from '../../interface/Interface';
 import ProductApi from '../../api/ProductApi';
-import CarApi from '../../api/CarApi';
+import CarApi from '../../api/CartApi';
 
 const ItemList = () => {
   const navigation = useNavigation();

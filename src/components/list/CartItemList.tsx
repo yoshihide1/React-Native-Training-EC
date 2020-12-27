@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Card, CardItem, Text, Right, Button, H3} from 'native-base';
 import {FlatList, Image, StyleSheet} from 'react-native';
-import CartApi from '../../api/CarApi';
+import CartApi from '../../api/CartApi';
 import UrlApi from '../../api/UrlApi';
 
 const CartItemList = () => {

@@ -1,76 +1,35 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, View, Text, Button} from 'react-native';
-import {Body, Card, CardItem, Thumbnail, Left} from 'native-base';
+import {Accordion} from 'native-base';
 import OrderApi from '../../api/OrderApi';
-import Url from '../../api/UrlApi';
+import Storage from '../../Storage';
 import {useNavigation} from '@react-navigation/native';
+import DailyOrderList from './DailyOrderList';
 
-const OrderList = ({route}: any) => {
-  const {id, date} = route.params;
-  const [items, setItems] = useState([]);
+const OrderList = () => {
   const navigation = useNavigation();
+  const [items, setItem] = useState([]);
   useEffect(() => {
-    OrderApi.fetchOrderItemHistory(
-      '/api/member/order/history/item',
-      id,
-      setItems,
-    );
+    const email = {email: Storage.getEmail()};
+    OrderApi.fetchMemberId('/api/member/order/member_id', email, orderDate);
   }, []);
 
-  const renderItems = ({item}: {item: any}) => {
-    return (
-      <View>
-        <Card>
-          <CardItem>
-            <Left>
-              <Thumbnail
-                source={{
-                  uri: Url.image(item.imagePath),
-                }}
-              />
-              <Body>
-                <Text>商品名:{item.imagePath}</Text>
-                <Text>商品名:{item.name}</Text>
-                <Text>
-                  価格:{item.unitPrice} 個数:{item.quantity}
-                </Text>
-              </Body>
-            </Left>
-          </CardItem>
-        </Card>
-      </View>
-    );
+  const orderDate = (id: number) => {
+    OrderApi.fetchOrder('/api/member/order/history', id, setItem);
   };
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.title}>
-        <Body>
-          <Text>注文履歴</Text>
-          <Text>注文日時:{date}</Text>
-        </Body>
-      </View>
-      <View style={styles.list}>
-        <FlatList style={styles.list} data={items} renderItem={renderItems} />
-      </View>
-      <View>
-        <Button title="戻る" onPress={() => navigation.goBack()} />
-      </View>
-    </View>
-  );
-};
+  const dataArray = () => {
+    const list: any[] = [];
+    for (let key in items) {
+      const data = {
+        title: `${key}月`,
+        content: <DailyOrderList navi={navigation} items={items[key]} />,
+      };
+      list.push(data);
+    }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  title: {
-    flex: 1,
-  },
-  list: {
-    flex: 10,
-    margin: 3,
-  },
-});
+    return list;
+  };
+  return <Accordion dataArray={dataArray()} expanded={0} />;
+};
 
 export default OrderList;

@@ -10,6 +10,7 @@ import MemberApplicateScreen from './src/screen/MemberApplicateScreen';
 import MyPageScreen from './src/screen/MyPageScreen';
 import ProductDetailScreen from './src/screen/ProductDetailScreen';
 import OrderList from './src/components/list/OrderList';
+import OrderItemDetailScreen from './src/screen/OrderItemDetailScreen';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -27,7 +28,11 @@ const App = () => {
         <Stack.Screen name="OrderForm" component={OrderFormScreen} />
         <Stack.Screen name="Complete" component={CompleteScreen} />
         <Stack.Screen name="MyPage" component={MyPageScreen} />
-        <Stack.Screen name="OrderList" component={OrderList} />
+        {/* <Stack.Screen name="OrderList" component={OrderList} /> */}
+        <Stack.Screen
+          name="OrderItemDetail"
+          component={OrderItemDetailScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -64,10 +64,18 @@ export default class OrderApi {
       });
   }
 
-  static fetchOrderDate(request: string, memberId: number, setState: Function) {
+  static fetchOrder(request: string, memberId: number, setState: Function) {
     const url = UrlApi.get(request);
     axios.get(`${url}/${memberId}`).then((res) => {
-      console.log(res.data);
+      console.log('-----------response', res.data);
+      setState(res.data);
+    });
+  }
+
+  static fetchMemberId(request: string, email: any, setState: Function) {
+    const url = UrlApi.get(request);
+    axios.post(url, email).then((res) => {
+      console.log('-------------id', res.data);
       setState(res.data);
     });
   }

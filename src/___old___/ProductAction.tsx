@@ -7,7 +7,7 @@ export default class ProductAction {
   static baseRequest = '/api/product';
 
   static async fetch(state: Function) {
-    const url = UrlApi.get(this.baseRequest);
+    const url = new UrlApi(this.baseRequest);
     MemberApi.getProduct(url, state);
     // try {
     //   const res = await axios.get(url);
